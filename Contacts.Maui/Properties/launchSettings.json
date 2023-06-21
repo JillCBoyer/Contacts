@@ -1,0 +1,13 @@
+{
+  "profiles": {
+    "Windows Machine": {
+      "commandName": "Executable",
+      "nativeDebugging": false
+    }
+  },
+  "AllowedHosts": "*",
+    "ConnectionStrings": {
+      "DbPath": "Server=.;Database=Db;Trusted_Connection=True;TrustServerCertificate=True"
+  }
+
+}
