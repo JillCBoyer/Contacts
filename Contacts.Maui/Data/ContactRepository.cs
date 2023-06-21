@@ -1,5 +1,5 @@
-﻿using Contacts.Maui.Models;
-using SQLite;
+﻿using SQLite;
+using Contact = Contacts.Maui.Models.Contact;
 
 namespace Contacts.Maui.Data
 {
@@ -35,10 +35,10 @@ namespace Contacts.Maui.Data
 
 
         //returns list of contacts
-        public List<Models.Contact> GetContacts()
+        public List<Contact> GetContacts()
         {
             Init();
-            return conn.Table<Models.Contact>().ToList();
+            return conn.Table<Contact>().ToList();
         }
 
 
@@ -61,18 +61,14 @@ namespace Contacts.Maui.Data
             conn.Insert(contact);
         }
 
-
-
         //deletes contact
-        public void Delete(int ContactId)
+        public void Delete(int contactId)
         {
-            conn = new SQLiteConnection(_dbPath);
-            conn.Delete(new { Id = ContactId });
+            Init();
+            conn.Delete<Contact>(contactId);
 
         }
-
-       
-
+               
         //initializes data
         public static List<Models.Contact> _contacts = new List<Models.Contact>();
         
@@ -89,14 +85,25 @@ namespace Contacts.Maui.Data
                     return contact;
                 }
             }
-
             return null;
-
         }       
 
-        public void UpdateContact(Models.Contact contact)
+
+        //updates contact
+        public void UpdateContact(int contactId, string name, string email, string phone, string address)
         {
-            GetConnection().Update(contact);
+            Init();
+            int result = 0;
+            Contact contact = GetContactById(contactId);
+            contact.Name = name;
+            contact.Email = email;
+            contact.Phone = phone;
+            contact.Address = address;
+            result = conn.Update(contact);
+            
+            
+            
+           //GetConnection().Update(contact);
         }
         
     }

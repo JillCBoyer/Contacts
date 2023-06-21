@@ -54,7 +54,7 @@ public partial class ContactsPage : ContentPage
         var menuItem = sender as MenuItem;
         var Contact = menuItem.CommandParameter as Contact;
         App.ContactRepository.Delete(Contact.ContactId);
-       
+        
         LoadContacts();
     }
 

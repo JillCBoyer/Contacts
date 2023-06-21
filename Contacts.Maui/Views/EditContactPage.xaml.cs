@@ -3,12 +3,14 @@ using Contacts.Maui.Models;
 using Contact = Contacts.Maui.Models.Contact;
 using ContactRepository = Contacts.Maui.Data.ContactRepository;
 
+
 namespace Contacts.Maui.Views;
 
 [QueryProperty(nameof(ContactId), "Id")]
 public partial class EditContactPage : ContentPage
 {
 	private Contact contact;
+	public string name;
 	
 	public EditContactPage()
 	{
@@ -29,8 +31,10 @@ public partial class EditContactPage : ContentPage
 
 	public string ContactId
 	{
+		get { return name;  }
 		set
 		{
+			name = value;
 			contact = App.ContactRepository.GetContactById(int.Parse(value));
 			if (contact != null)
 			{ 
@@ -44,14 +48,15 @@ public partial class EditContactPage : ContentPage
 
     private void btnUpdate_Clicked(object sender, EventArgs e)
     {
-		ContactRepository contactRepo = new ContactRepository("Server=.;Database=Db;Trusted_Connection=True;TrustServerCertificate=True");
-		Contact contact = new Contact();
-		contact.Name = contactCtrl.Name;
-		contact.Email = contactCtrl.Email;
-		contact.Phone = contactCtrl.Phone;
-		contact.Address = contactCtrl.Address;
+		//ContactRepository contactRepo = new ContactRepository("Server=.;Database=Db;Trusted_Connection=True;TrustServerCertificate=True");
+		//Contact contact = new Contact();
+		//contact.Name = contactCtrl.Name;
+		//contact.Email = contactCtrl.Email;
+		//contact.Phone = contactCtrl.Phone;
+		//contact.Address = contactCtrl.Address;
+		//contactRepo.UpdateContact(contact);
 
-		contactRepo.UpdateContact(contact);
+		App.ContactRepository.UpdateContact(int.Parse(ContactId), contactCtrl.Name, contactCtrl.Email, contactCtrl.Phone, contactCtrl.Address);
 		Shell.Current.GoToAsync("..");
     }
 
